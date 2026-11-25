@@ -1,15 +1,15 @@
 # Chronics of Lunara — GDD Parcial
 
 > **Status:** Parcial — Discovery em andamento; não é o GDD final aprovado.  
-> **Fase registrada:** Fase 1/8 — Blocos A–C concluídos; Bloco D iniciado, respostas pendentes.  
-> **Versão:** 0.1  
+> **Fase registrada:** Fase 1/8 — Blocos A–C concluídos; Bloco D em andamento, com puzzles e combate em turnos parcialmente definidos.  
+> **Versão:** 1.7  
 > **Data:** 11/11/2026  
 > **Idioma:** Português (Brasil)  
 > **Framework:** GDD-MODEL-IA v1.0.0
 
 ## Escopo deste snapshot
 
-Este documento registra somente as decisões e direções aceitas até o ponto atual da entrevista. O Bloco D foi apresentado, mas ainda não respondido. Itens não decididos estão marcados como **[PENDENTE]**; requisitos do template que precisam ser tratados no GDD final estão identificados como requisitos do framework, não como decisões já aprovadas de implementação.
+Este documento registra somente as decisões e direções aceitas até o ponto atual da entrevista. O Bloco D está em andamento: puzzles ambientais usam itens combinados pelo inventário; meta-puzzles acontecem dentro do jogo, e ao tentar sair com `Esc`, o Hat oferece uma dica — se a pessoa recusar, o Hat permanece no puzzle. Inimigos surgem aleatoriamente pelas salas, com limite de 5 por sala; o contato inicia combate, com 15% de chance de enfrentar mais de 1 inimigo. Esses encontros múltiplos podem conter 2 ou 3 inimigos, respeitando o máximo de 3 por combate. No combate por turnos, Lunara escolhe entre atacar, pedir análise ao Hat (1 turno; +40% de dano contra o inimigo analisado por 2 turnos) ou defender-se (reduz em 50% todos os ataques inimigos por 2 turnos); após a ação de Lunara, todos os inimigos agem e então o turno retorna a Lunara. Conta-se um turno após o ataque de cada inimigo. Os efeitos não acumulam, mas podem ser renovados; ao renovar, a duração volta a 2 turnos. A proporção entre encontros de 2 e de 3 inimigos, a ordem interna dos inimigos e as regras detalhadas de surgimento ainda precisam de especificação. Itens não decididos estão marcados como **[PENDENTE]**; requisitos do template que precisam ser tratados no GDD final estão identificados como requisitos do framework, não como decisões já aprovadas de implementação.
 
 **Gate de aprovação:** este arquivo não substitui o Game Brief de 1 página. O GDD completo só será redigido após concluir o Discovery, preparar o Game Brief e receber aprovação explícita do usuário, conforme o processo combinado.
 
@@ -17,6 +17,22 @@ Este documento registra somente as decisões e direções aceitas até o ponto a
 
 | Versão | Data | Alterações |
 |---|---|---|
+| 1.7 | 11/11/2026 | Definidos encontros múltiplos com 2 ou 3 inimigos, respeitando o máximo de 3 por combate; proporção entre grupos pendente. |
+| 1.6 | 11/11/2026 | Definido limite de 3 inimigos por combate; registrada a chance de 15% de encontro múltiplo e o limite de 5 inimigos por sala. |
+| 1.5 | 11/11/2026 | Definida em 15% a chance de combate com mais de 1 inimigo; máximo de inimigos por sala segue 5; máximo por combate pendente. |
+| 1.4 | 11/11/2026 | Definido limite de 5 inimigos por sala e chance de combate com mais de 1 inimigo ao encostar; probabilidade/seleção pendentes. |
+| 1.3 | 11/11/2026 | Registrados encontros aleatórios nas salas acionados por contato e a contagem de 1 turno após cada ataque inimigo. |
+| 1.2 | 11/11/2026 | Confirmado que a renovação da análise ou da defesa redefine a duração do efeito para 2 turnos. |
+| 1.1 | 11/11/2026 | Confirmado que análise e defesa não acumulam, mas podem ser renovadas; regras operacionais de renovação e contagem ainda pendentes. |
+| 1.0 | 11/11/2026 | Confirmado que a defesa reduz 50% de todos os ataques inimigos por 2 turnos e que a rodada segue Lunara → todos os inimigos → Lunara. Ordem interna dos inimigos e contagem exata dos efeitos pendentes. |
+| 0.9 | 11/11/2026 | Definidos o bônus de análise do Hat (+40% contra o inimigo analisado por 2 turnos) e a defesa (redução de 50% por 2 turnos); contagem/escopo operacional ainda pendentes. |
+| 0.8 | 11/11/2026 | Definido que os inimigos agem após a ação de Lunara e que a defesa reduz o dano recebido em 50%; duração/escopo da defesa ainda pendentes. |
+| 0.7 | 11/11/2026 | Definido o turno de Lunara com ações de ataque, análise ou defesa; análise aplica-se apenas ao inimigo analisado por 2 turnos. Valor de bônus, defesa e sequência de turnos ainda pendentes. |
+| 0.6 | 11/11/2026 | Confirmado que itens ambientais são combinados pelo inventário; ao recusar a dica no fluxo de saída do meta-puzzle, o Hat permanece no puzzle. Estado da pessoa jogadora após a recusa pendente. |
+| 0.5 | 11/11/2026 | Registrado que os meta-puzzles acontecem dentro do jogo; interface e formato específico pendentes. |
+| 0.4 | 11/11/2026 | Adicionado combate em turnos e habilidade do Hat de analisar fraquezas inimigas consumindo um turno, aumentando o dano de Lunara; duração e valores de balanceamento pendentes. |
+| 0.3 | 11/11/2026 | Especificado que, ao tentar sair de um meta-puzzle com `Esc`, o Hat pergunta se a pessoa quer uma dica; resultado após a pergunta permanece pendente. |
+| 0.2 | 11/11/2026 | Acrescentadas as decisões parciais de Gameplay: meta-puzzles com opção de saída por Esc e puzzles ambientais com itens espalhados que são combinados para resolvê-los. Restam perguntas do Bloco D. |
 | 0.1 | 11/11/2026 | Snapshot parcial do Discovery: visão, público, modelo comercial e direção técnica aceitos; Gameplay e demais blocos ainda em aberto. |
 
 ## Sumário
@@ -98,7 +114,7 @@ O modelo comercial e a divisão entre demo e jogo completo estão confirmados. A
 
 ### 2.1 Core Loop
 
-**[PENDENTE]** A sequência micro, macro e meta do core loop não foi definida. Sabe-se que o jogo é um Puzzle-RPG com foco em puzzles e que o Hat ajuda com dicas; ordem de exploração, interação, resolução, recompensa e progressão ainda precisa ser respondida no Bloco D. O diagrama Mermaid será elaborado após essa definição.
+A sequência completa micro, macro e meta do core loop ainda está **[PENDENTE]**. Tipos de puzzle já confirmados: puzzles ambientais com itens espalhados pelo cenário e combinados pelo inventário; e meta-puzzles que acontecem dentro do jogo, em que `Esc` inicia a tentativa de saída e o Hat pergunta se a pessoa quer uma dica. Se a dica for recusada, o Hat permanece no puzzle; a situação da pessoa jogadora ainda precisa ser definida. Inimigos surgem aleatoriamente pelas salas, com limite de 5 por sala; o contato inicia combate, com 15% de chance de enfrentar mais de 1 inimigo. Esses encontros múltiplos podem conter 2 ou 3 inimigos, respeitando o máximo de 3 por combate. O combate será em turnos: no turno de Lunara, as opções confirmadas são atacar, pedir ao Hat para analisar um inimigo ou defender-se. A análise custa 1 turno e dá a Lunara +40% de dano contra o inimigo analisado por 2 turnos; a defesa reduz em 50% todos os ataques inimigos por 2 turnos. A rodada segue: ação de Lunara → ações de todos os inimigos → turno de Lunara; conta-se 1 turno após o ataque de cada inimigo. Os efeitos não acumulam e, ao renovar, sua duração volta a 2 turnos. A proporção entre encontros de 2 e de 3 inimigos, a ordem interna dos inimigos, as regras de surgimento, o formato/interface dos meta-puzzles e o resultado após aceitar a dica ainda serão definidos; o diagrama Mermaid será elaborado após essa definição.
 
 ### 2.2 Mecânicas
 
@@ -106,14 +122,26 @@ Os IDs abaixo são provisórios para rastreabilidade; os detalhes de implementa�
 
 | ID | Mecânica | Entrada | Regras conhecidas / pendentes | Feedback | Critério de aceite |
 |---|---|---|---|---|---|
-| MEC-001 | Resolução de puzzles | **[PENDENTE]** | O jogo prioriza puzzles; tipos, regras, falha, reset e progressão dos puzzles não foram definidos. | **[PENDENTE]** | **[PENDENTE]** |
-| MEC-002 | Dicas diegéticas do Hat of Eternity | **[PENDENTE]** | Confirmado que o Hat funciona como sistema de dicas para puzzles. Forma de solicitação, quantidade/níveis de dica, custo e consequências narrativas estão pendentes. | **[PENDENTE]** | **[PENDENTE]** |
-| MEC-003 | Consciência da quarta parede / interação meta | **[PENDENTE]** | Confirmado que o Hat sabe estar dentro de um jogo e quebra a quarta parede. Interações concretas com menus, configurações, arquivos, memória ou elementos fora do canvas não foram definidas. | **[PENDENTE]** | **[PENDENTE]** |
+| MEC-001 | Puzzle ambiental com itens | Inventário; controles de coleta e seleção **[PENDENTE]** | Confirmado: itens espalhados pelo cenário são combinados pelo inventário para resolver puzzles ambientais. Lista de itens, receitas/regras de combinação e tratamento de combinações incorretas **[PENDENTE]**. | **[PENDENTE]** | **[PENDENTE]** |
+| MEC-002 | Dicas diegéticas do Hat of Eternity | Ao tentar sair de um meta-puzzle com `Esc`, o Hat pergunta se a pessoa quer uma dica. | Confirmado: o Hat oferece dicas para puzzles; se a pessoa recusa a dica nessa situação, o Hat permanece no puzzle. Níveis de dica, conteúdo da resposta, resultado ao aceitar e custo/consequências de uso frequente **[PENDENTE]**. | Pergunta do Hat; conteúdo e resposta **[PENDENTE]**. | **[PENDENTE]** |
+| MEC-003 | Meta-puzzle e opção de saída | Tecla `Esc` | Confirmado: meta-puzzles acontecem dentro do jogo. `Esc` inicia a tentativa de saída e o Hat pergunta se a pessoa quer uma dica; se recusar, o Hat permanece no puzzle. Estado da pessoa jogadora após a recusa, resultado ao aceitar e tratamento do progresso **[PENDENTE]**. | Pergunta do Hat; demais feedback **[PENDENTE]**. | **[PENDENTE]** |
+| MEC-004 | Consciência da quarta parede do Hat | **[PENDENTE]** | Confirmado que o Hat sabe estar dentro de um jogo e quebra a quarta parede. Como essa característica se manifesta dentro do jogo e sua relação com menus, configurações, arquivos ou memórias **[PENDENTE]**. | **[PENDENTE]** | **[PENDENTE]** |
+| MEC-005 | Combate em turnos | No turno de Lunara, selecionar ataque, análise do Hat ou defesa; mapeamento **[PENDENTE]** | Confirmado: as opções de Lunara são atacar, solicitar a análise do Hat ou defender-se; a rodada segue ação de Lunara → todos os inimigos agem → retorna a Lunara. Conta-se 1 turno após o ataque de cada inimigo. Ordem interna dos inimigos **[PENDENTE]**. | **[PENDENTE]** | **[PENDENTE]** |
+| MEC-006 | Análise de fraquezas pelo Hat | Opção de análise no turno de Lunara; entrada específica **[PENDENTE]** | A análise custa 1 turno e aumenta em 40% o dano apenas contra o inimigo analisado por 2 turnos. O efeito não acumula; pode ser renovado e a duração retorna a 2 turnos. O contador avança após cada ataque inimigo; momento exato de ativação/expiração **[PENDENTE]**. | **[PENDENTE]** | **[PENDENTE]** |
+| MEC-007 | Defesa de Lunara | Opção de defesa no turno de Lunara; entrada específica **[PENDENTE]** | A defesa reduz em 50% todos os ataques inimigos por 2 turnos. O efeito não acumula; pode ser renovado e a duração retorna a 2 turnos. O contador avança após cada ataque inimigo; momento exato de ativação/expiração **[PENDENTE]**. | **[PENDENTE]** | **[PENDENTE]** |
+| MEC-008 | Encontros aleatórios por contato | Inimigos surgem aleatoriamente nas salas; contato com Lunara | Confirmado: há no máximo 5 inimigos por sala; ao encostar em um deles, começa o combate por turnos. Há 15% de chance de o encontro incluir mais de 1 inimigo; encontros múltiplos podem conter 2 ou 3 inimigos (máximo 3 por combate). Proporção entre grupos de 2 e 3, regras de surgimento e reaparecimento **[PENDENTE]**. | **[PENDENTE]** | **[PENDENTE]** |
 
 ### 2.3 Controles e mapeamento
 
 - **Dispositivos aceitos como alvo:** teclado, mouse e gamepad.
-- **[PENDENTE]** Mapeamento de ações, navegação de menus, remapeamento e comportamento por dispositivo.
+
+| Contexto | Entrada | Ação | Estado |
+|---|---|---|---|
+| Meta-puzzle | `Esc` | Iniciar a tentativa de saída; o Hat pergunta se a pessoa deseja uma dica. | Se a dica for recusada, o Hat permanece no puzzle. Estado da pessoa jogadora e resultado ao aceitar ainda estão **[PENDENTE]**. |
+| Puzzle ambiental | Inventário; controles de coleta/seleção **[PENDENTE]** | Combinar pelo inventário os itens encontrados no cenário. | A combinação via inventário está confirmada; controles específicos e interface ainda estão **[PENDENTE]**. |
+| Combate — turno de Lunara | Seleção de ação; mapeamento **[PENDENTE]** | Escolher entre atacar, solicitar análise do Hat ou defender-se; depois todos os inimigos agem e o turno retorna a Lunara. | Ciclo de turnos confirmado; interface, mapeamento e ordem interna dos inimigos pendentes. |
+
+O restante do mapeamento de gameplay, menus, remapeamento e comportamento por dispositivo está **[PENDENTE]**.
 
 ### 2.4 Câmera
 
@@ -121,11 +149,11 @@ Câmera top-down 3/4, com *OneShot* como referência indicada. Resolução de mu
 
 ### 2.5 Física e colisões
 
-**[PENDENTE]** Velocidade, colisores, interação com cenário, bloqueios, física e regras de colisão.
+Contato de Lunara com um inimigo inicia o combate por turnos. **[PENDENTE]** Velocidade, geometria dos colisores, distância/condição exata de contato, bloqueios, física e demais regras de colisão.
 
 ### 2.6 Vitória, derrota, continue e respawn
 
-**[PENDENTE]** Condições de vitória, falha, Game Over, reset de sala, continue, respawn e consequências de escolhas não foram definidas. A existência de combate, morte ou múltiplos finais ainda não está confirmada.
+O combate por turnos está confirmado. **[PENDENTE]** Condições de vitória/derrota em combate, Game Over, reset de sala, continue, respawn e consequências de escolhas. Morte da personagem e múltiplos finais ainda não estão confirmados.
 
 ### 2.7 Progressão
 
@@ -141,11 +169,11 @@ Câmera top-down 3/4, com *OneShot* como referência indicada. Resolução de mu
 
 ### 2.10 Sistemas de suporte
 
-O sistema de dicas do Hat está confirmado como conceito; seu fluxo ainda está pendente (MEC-002). Outros sistemas de suporte, como registro de objetivos, diário, mapa, opções de acessibilidade e ajuda contextual, ainda não foram definidos.
+O Hat oferece suporte em puzzles e combate: ao tentar sair de um meta-puzzle com `Esc`, pergunta se a pessoa deseja uma dica; se a dica for recusada, o Hat permanece no puzzle. Inimigos surgem aleatoriamente nas salas (máximo 5 por sala); o contato inicia combate, com 15% de chance de o encontro incluir mais de 1 inimigo. Encontros múltiplos podem ter 2 ou 3 inimigos, com limite de 3 por combate. Em combate, o turno de Lunara pode ser usado para atacar, pedir ao Hat que analise um inimigo ou defender-se; após a ação dela, todos os inimigos agem e o turno retorna a Lunara, contando-se 1 turno após cada ataque inimigo. A análise custa 1 turno e aumenta em 40% o dano apenas contra o inimigo analisado por 2 turnos; a defesa reduz em 50% todos os ataques inimigos por 2 turnos. Esses efeitos não acumulam, mas podem ser renovados, redefinindo a duração para 2 turnos. A proporção entre grupos de 2 e 3 inimigos, a ordem interna dos inimigos, as regras de surgimento, o ponto exato de ativação/expiração dos efeitos renovados e o efeito de aceitar a dica ainda estão **[PENDENTE]** (MEC-002/MEC-003/MEC-005/MEC-006/MEC-007/MEC-008). Outros sistemas de suporte, como registro de objetivos, diário, mapa, opções de acessibilidade e ajuda contextual, ainda não foram definidos.
 
 ### 2.11 Balanceamento
 
-Não há parâmetros ou valores de balanceamento confirmados. Para evitar números inventados, a tabela final `Parâmetro | Padrão | Mín | Máx | Unidade | Obs` será preenchida após definição das mecânicas, dificuldade e ritmo.
+Parâmetros confirmados: a análise aumenta o dano em 40% contra o inimigo analisado por 2 turnos; a defesa reduz em 50% todos os ataques inimigos por 2 turnos. Os efeitos não acumulam e, ao serem renovados, a duração retorna a 2 turnos; conta-se um turno após cada ataque inimigo. **[PENDENTE]** Momento exato de ativação/expiração dos efeitos e demais valores de balanceamento. Para evitar números inventados, a tabela final `Parâmetro | Padrão | Mín | Máx | Unidade | Obs` será preenchida após definição das mecânicas, dificuldade e ritmo.
 
 ## 3. Conteúdo do Jogo
 
@@ -157,12 +185,13 @@ Não há parâmetros ou valores de balanceamento confirmados. Para evitar númer
 
 ### 3.2 Inimigos, NPCs e chefes
 
-- **ENT-002 — Hat of Eternity:** chapéu mágico senciente que acompanha Lunara durante a aventura, auxilia com dicas de puzzles e tem consciência de estar dentro de um jogo.
-- **[PENDENTE]** Outros NPCs, inimigos, chefes, combate e máquinas de estados (FSM). Não está confirmado se haverá inimigos ou chefes.
+- **ENT-002 — Hat of Eternity:** chapéu mágico senciente que acompanha Lunara durante a aventura, auxilia com dicas de puzzles, pode analisar fraquezas de inimigos durante o combate e tem consciência de estar dentro de um jogo.
+- Inimigos surgem aleatoriamente pelas salas, com limite de 5 por sala; o contato com Lunara inicia o combate por turnos. Há 15% de chance de encontro múltiplo, que pode incluir 2 ou 3 inimigos (máximo 3 por combate).
+- **[PENDENTE]** Elenco e IDs `ENT-###` de inimigos, tipos, atributos, comportamento/FSM, ordem de ação, proporção dos encontros de 2 versus 3 inimigos, chefes e outros NPCs; regras detalhadas de surgimento.
 
 ### 3.3 Itens e coletáveis
 
-**[PENDENTE]** Inventário, itens-chave, consumíveis, colecionáveis e quaisquer IDs `ITM-###` serão definidos após a decisão sobre mecânicas e economia.
+Está confirmado que puzzles ambientais terão itens espalhados pelo cenário, combinados pelo inventário para resolver os puzzles. **[PENDENTE]** Lista e IDs `ITM-###`, regras de coleta, receitas/regras específicas de combinação, tratamento de combinações incorretas, itens-chave, consumíveis e colecionáveis.
 
 ### 3.4 Níveis e fases
 
@@ -172,7 +201,9 @@ Não há parâmetros ou valores de balanceamento confirmados. Para evitar númer
 ### 3.5 Level design, teaching moments e Tiled
 
 - **Ferramenta/formato de mapa aceito como direção técnica:** Tiled, arquivos `.tmj`.
-- **[PENDENTE]** Estrutura de salas, regras de navegação, sequência de ensino de mecânicas, teaching moments, checkpoints e critérios de conclusão de fase.
+- Puzzles ambientais usarão itens espalhados pelo cenário, combinados via inventário para resolver o puzzle.
+- Inimigos surgem aleatoriamente pelas salas, até 5 por sala; o contato inicia o combate. Há 15% de chance de enfrentar mais de 1 inimigo; esses encontros podem ter 2 ou 3 inimigos, com máximo de 3 por combate.
+- **[PENDENTE]** Proporção de encontros com 2 versus 3 inimigos, algoritmo de posicionamento e frequência/reaparecimento; distribuição/legibilidade dos itens, estrutura de salas, navegação, teaching moments, checkpoints e critérios de conclusão.
 
 ### 3.6 Narrativa, personagens e diálogos
 
@@ -188,7 +219,7 @@ Não há parâmetros ou valores de balanceamento confirmados. Para evitar númer
 
 ### 4.2 Wireframes textuais
 
-**[PENDENTE]** Wireframes de menu, HUD, inventário, diálogo, pausa, configurações e demais telas.
+O inventário é necessário para combinar itens de puzzles ambientais. **[PENDENTE]** Wireframe, layout, navegação e feedback do inventário; wireframes de menu, HUD, diálogo, pausa, configurações e demais telas.
 
 ### 4.3 HUD
 
@@ -450,6 +481,16 @@ Os requisitos a seguir registram direções confirmadas ou itens obrigatórios d
 | REQ-F-004 | O Hat of Eternity tem consciência de estar dentro de um jogo e quebra a quarta parede. | USP confirmada; interações concretas pendentes. |
 | REQ-F-005 | A demo gratuita para navegador inclui o Capítulo 1 jogável. | Modelo comercial/distribuição confirmados. |
 | REQ-F-006 | O jogo deve oferecer save local/offline com meta-persistência ligada à quarta parede. | Direção técnica aceita; dados e semântica pendentes. |
+| REQ-F-007 | Puzzles ambientais devem apresentar itens espalhados pelo cenário que são combinados pelo inventário para resolver o puzzle. | Gameplay confirmado; lista de itens, controles e regras específicas pendentes. |
+| REQ-F-008 | Meta-puzzles devem oferecer uma opção para iniciar a saída usando a tecla `Esc`. | Gameplay confirmado; conclusão da saída e tratamento do progresso pendentes. |
+| REQ-F-009 | Ao tentar sair de um meta-puzzle com `Esc`, o Hat of Eternity pergunta se a pessoa deseja uma dica. | Gameplay confirmado; consequências de aceitar/recusar e fluxo após a pergunta pendentes. |
+| REQ-F-010 | O combate será por turnos: Lunara age, todos os inimigos agem, e o turno retorna a Lunara; conta-se 1 turno após o ataque de cada inimigo. | Gameplay confirmado; ordem interna dos inimigos e interface/mapeamento pendentes. |
+| REQ-F-011 | A análise do Hat custa 1 turno e aumenta em 40% o dano de Lunara apenas contra o inimigo analisado por 2 turnos; o efeito não acumula e, ao ser renovado, sua duração retorna a 2 turnos. | Gameplay confirmado; instante de ativação/expiração do efeito pendente. |
+| REQ-F-012 | Os meta-puzzles acontecem dentro do jogo. | Gameplay confirmado; formato/interface in-game pendentes. |
+| REQ-F-013 | Se a pessoa recusar a dica oferecida ao tentar sair do meta-puzzle, o Hat permanece no puzzle. | Gameplay confirmado; estado da pessoa jogadora após a recusa pendente. |
+| REQ-F-014 | A ação de defesa de Lunara reduz em 50% todos os ataques inimigos por 2 turnos; o efeito não acumula e, ao ser renovado, sua duração retorna a 2 turnos. | Gameplay confirmado; instante de ativação/expiração do efeito pendente. |
+| REQ-F-015 | Inimigos surgem aleatoriamente pelas salas, com limite de 5 por sala; o contato com um inimigo inicia combate por turnos. | Gameplay confirmado; frequência, posicionamento e reaparecimento pendentes. |
+| REQ-F-016 | Ao encostar em um inimigo, há 15% de chance de o combate incluir mais de 1 inimigo; encontros múltiplos podem ter 2 ou 3 inimigos, com máximo de 3 por combate. | Gameplay confirmado; proporção de encontros com 2 versus 3 inimigos pendente. |
 
 ### 11.2 Requisitos não funcionais e restrições de projeto
 
@@ -471,9 +512,14 @@ Os requisitos a seguir registram direções confirmadas ou itens obrigatórios d
 
 | Mecânica/recurso | Requisito relacionado | Tarefa | Teste | Situação |
 |---|---|---|---|---|
-| MEC-001 — resolução de puzzles | REQ-NF-001 | **[PENDENTE]** BKL-### na Fase 5 | **[PENDENTE]** TST-### após definição das regras | Tipos e aceite de puzzle ainda não definidos. |
-| MEC-002 — dicas do Hat | REQ-F-003 | **[PENDENTE]** BKL-### na Fase 5 | **[PENDENTE]** TST-### após definição do fluxo | Conceito confirmado; interação e condições pendentes. |
-| MEC-003 — quebra da quarta parede | REQ-F-004 | **[PENDENTE]** BKL-### na Fase 5 | **[PENDENTE]** TST-### após definir interações | Consciência do Hat confirmada; escopo meta pendente. |
+| MEC-001 — puzzle ambiental com combinação de itens | REQ-F-007 | **[PENDENTE]** BKL-### na Fase 5 | **[PENDENTE]** TST-### após definir regras e controles | Itens espalhados e combinação pelo inventário confirmados; regras específicas pendentes. |
+| MEC-002 — dicas do Hat | REQ-F-003, REQ-F-009, REQ-F-013 | **[PENDENTE]** BKL-### na Fase 5 | **[PENDENTE]** TST-### após definição do fluxo | Pergunta ao tentar sair e permanência do Hat se a dica for recusada confirmadas; demais efeitos pendentes. |
+| MEC-003 — meta-puzzle e saída por `Esc` | REQ-F-008, REQ-F-009, REQ-F-012, REQ-F-013 | **[PENDENTE]** BKL-### na Fase 5 | **[PENDENTE]** TST-### após definir saída e persistência | Meta-puzzle dentro do jogo e fluxo da pergunta confirmados; estado da pessoa jogadora e resultado após aceitar a dica pendentes. |
+| MEC-004 — quebra da quarta parede do Hat | REQ-F-004 | **[PENDENTE]** BKL-### na Fase 5 | **[PENDENTE]** TST-### após definir interações | Consciência do Hat confirmada; escopo meta pendente. |
+| MEC-005 — combate em turnos | REQ-F-010 | **[PENDENTE]** BKL-### na Fase 5 | **[PENDENTE]** TST-### após definir fluxo e regras | Ciclo Lunara → todos os inimigos → Lunara e contagem após cada ataque inimigo confirmados; ordem interna pendente. |
+| MEC-006 — análise de fraquezas | REQ-F-011 | **[PENDENTE]** BKL-### na Fase 5 | **[PENDENTE]** TST-### após balanceamento | Custo de 1 turno, bônus de 40%, duração de 2 turnos e renovação sem acumular confirmados; contador avança após cada ataque inimigo. |
+| MEC-007 — defesa | REQ-F-014 | **[PENDENTE]** BKL-### na Fase 5 | **[PENDENTE]** TST-### após balanceamento | Redução de 50% contra todos os ataques inimigos por 2 turnos e renovação sem acumular confirmadas; contador avança após cada ataque inimigo. |
+| MEC-008 — encontros aleatórios por contato | REQ-F-015, REQ-F-016 | **[PENDENTE]** BKL-### na Fase 5 | **[PENDENTE]** TST-### após definir regras de geração | Máximo de 5 por sala, contato que inicia combate, chance de 15% de encontro múltiplo e encontros de 2 ou 3 inimigos (máximo 3 por combate) confirmados; proporção entre esses grupos pendente. |
 | Demo do Capítulo 1 | REQ-F-005 | **[PENDENTE]** BKL-### na Fase 5 | **[PENDENTE]** TST-### após definir critérios de release | Conteúdo exato do capítulo ainda pendente. |
 | Save local/meta-persistência | REQ-F-006 | **[PENDENTE]** BKL-### após ADR de save | **[PENDENTE]** TST-### após definir esquema e migração | Direção confirmada; implementação pendente. |
 
@@ -489,11 +535,11 @@ Nenhuma premissa material de gameplay ou produção foi adicionada neste snapsho
 
 ### Perguntas pendentes do Bloco D — Gameplay
 
-1. Quais tipos de puzzles e interações compõem o jogo? Haverá combinação de itens, puzzles ambientais e/ou meta-puzzles que interagem com a interface ou elementos externos ao canvas?
-2. O componente RPG terá combate, perseguições/perigos ambientais ou será focado em exploração, escolhas, inventário e narrativa, sem combate tradicional?
+1. **Detalhes dos puzzles:** itens ambientais são combinados pelo inventário; meta-puzzles acontecem dentro do jogo; ao tentar sair com `Esc`, o Hat pergunta se a pessoa deseja uma dica e, se ela recusar, o Hat permanece no puzzle. **[PENDENTE]** Definir receitas/regras específicas dos itens, formato/interface dos meta-puzzles, estado da pessoa jogadora após a recusa e fluxo após aceitar a dica.
+2. **Detalhes do combate/encontros:** inimigos surgem aleatoriamente nas salas (máximo 5 por sala); o contato inicia combate, com 15% de chance de incluir mais de 1 inimigo. Encontros múltiplos podem ter 2 ou 3 inimigos, com máximo de 3 por combate. A rodada é Lunara → todos os inimigos → Lunara, com 1 turno contado após cada ataque inimigo. A análise (+40% contra o inimigo analisado por 2 turnos) e a defesa (−50% de todos os ataques inimigos por 2 turnos) não acumulam; renová-las redefine a duração para 2 turnos. **[PENDENTE]** Proporção de encontros com 2 versus 3 inimigos, regras de surgimento, ordem interna dos inimigos e instante de ativação/expiração dos efeitos.
 3. Haverá Game Over, reset de sala, consequências para falhas ou múltiplos finais ligados à relação entre Lunara e o Hat?
 4. Como será a progressão — capítulos/regiões/hubs — e existirão recursos, moeda, loja ou colecionáveis?
-5. O Hat oferecerá dicas progressivas? Haverá custo ou reação narrativa pelo uso frequente?
+5. Além do convite para uma dica ao tentar sair de meta-puzzles, haverá dicas progressivas? O uso frequente terá custo ou consequências narrativas?
 
 ### Outros itens pendentes do Discovery e das fases seguintes
 
@@ -529,9 +575,9 @@ Nenhuma premissa material de gameplay ou produção foi adicionada neste snapsho
 
 | Verificação | Estado | Observação |
 |---|---|---|
-| Decisões dos Blocos A e B registradas | ✔ | Visão, gênero, USP, público, ClassInd e modelo comercial constam neste documento. |
+| Decisões dos Blocos A–C registradas | ✔ | Visão, gênero, USP, público, ClassInd, modelo comercial e direções técnicas constam neste documento. Gameplay do Bloco D está parcialmente registrado. |
 | Quatro direções técnicas do Bloco C registradas | ✔ | Plataforma, dispositivos de entrada, save/meta-persistência e stack foram registrados como direções aceitas. |
-| Discovery concluído | ✖ | Blocos D, E e F ainda não foram respondidos/concluídos. |
+| Discovery concluído | ✖ | Bloco D está em andamento; Blocos E e F estão pendentes. |
 | Game Brief aprovado explicitamente | ✖ | Ainda não preparado nem submetido à aprovação. |
 | ADRs React + Phaser concluídos | ✖ | Planejados para a Fase 3. |
 | GDD completo e verificável | ✖ | Este arquivo é parcial e contém pendências. |
